@@ -21,7 +21,7 @@ https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scienti
 <br><br>
 Data preview
 1. Surveyor columns<br>
-![](./images/df_surveyor.jpg)
+![](./images/surveyor_col.jpg)
    >   
        * enrollee_id - 설문자 고유번호
        * gender - 설문자 성별
