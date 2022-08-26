@@ -173,8 +173,8 @@ Data preview
 
 #### **1.7 결측값 처리(명목형)**
 > － 채용·구직환경에서 일반적으로 순위를 측정할 수 없는 특성에 대한 결측치 처리<br>
-[회사유형(company_type)]　<br>
-－ 대부분의 결측치가 처리 된 이후 명목형 변수에 대한 처리를 실시하여 정확한 분류 유도
+[회사유형(company_type)]<br>
+－ 대부분의 결측치가 처리 된 이후 명목형 변수에 대한 처리를 실시하여 정확한 분류 유도<br>
 － RandomForest-Algorithm을 기반으로한 Missforest를 활용해<br>
 　 다른 특성들과의 관계를 계산하여 결측치를 대치
 ![](./images/com_type_clear.jpg)<br><br>
