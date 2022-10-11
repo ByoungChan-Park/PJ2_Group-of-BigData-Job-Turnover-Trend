@@ -2,14 +2,14 @@
 ## (Ver.Amendment)
 <br>
 
-### **개선 된 프로젝트**
+## **개선 된 프로젝트**
 해당 프로젝트는 이전 프로젝트(ver.Draft)의 개선된 버전으로, 결측치처리, 불균형데이터처리, 평가지표 선정 등 다방면에서 업데이트를 진행<br>
 － 이전 프로젝트 링크<br>
 https://github.com/ByoungChan-Park/PJ2_Group-of-BigData-Job-Turnover-Trend/tree/main/Analytics_ver.Draft<br>
 
 <br>
 
-#### 파일 설명
+### 파일 설명
     HR_Analytics_Data_Scientist_Turnover_Trend_Ver_Amendment : 데이터 분석 진행 파일
     requirements_Amendment : 작업에 사용된 라이브러리 버전 모음
     images : README 첨부 사진
@@ -63,7 +63,9 @@ Data preview
 <br>
 
 ### **분석 목표**
-데이터 직군에 종사하는 사람들의 배경에 좌우되는 이직희망여부를 통해<br>이진분류 모델 설계 및 이직트렌드를 분석하여 데이터직군 종사자들에게 이직 트렌드를 시사하고,<br>채용하는 회사에게 퇴직자를 예상하여 대비할 수 있게 한다.
+데이터 직군에 종사하는 사람들의 배경에 좌우되는 이직희망여부를 통해<br>
+이진분류 모델 설계 및 이직트렌드를 분석하여 데이터직군 종사자들에게 이직 트렌드를 시사하고,<br>
+채용하는 회사에게 퇴직자를 예상하여 대비할 수 있게 한다.
 <br><br>
 
 ### **가설 설정**
@@ -202,25 +204,31 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 #### **1.6 결측값 처리(유추 불가 특성)**
 성별(gender)의 경우 다른 특성으로 유추할 수 없다고 판단<br>
 >![](./images/no_gender.jpg)<br><br>
-－ cardinality가 3개로, 다른 특성에 비해 다양하지 않기에,<br>모델학습에서 중요한 특성으로 인식될 경우 오 예측을 야기할 것이라 예상<br>따라서 'No Data'로 일괄대치
+－ cardinality가 3개로, 다른 특성에 비해 다양하지 않기에,<br>
+모델학습에서 중요한 특성으로 인식될 경우 오 예측을 야기할 것이라 예상<br>
+따라서 'No Data'로 일괄대치
 <br><br>
 ![](./images/gender_before_after.jpg)
 
 <br>
 
 #### **1.7 기계학습을 통한 결측값 처리(순서형)**
-채용·구직환경에서 일반적으로 순위를 측정할 수 있는 특성 중<br>결측치 처리가 되지 않은 행에 대하여 MissForest를 통한 기계학습 대치 진행<br>
+채용·구직환경에서 일반적으로 순위를 측정할 수 있는 특성 중<br>
+결측치 처리가 되지 않은 행에 대하여 MissForest를 통한 기계학습 대치 진행<br>
 > ![](./images/ordinal_missforest.jpg)<br>
-－ RandomForest-Algorithm을 기반으로한 Missforest를 통해<br>다른 특성들과의 관계를 계산하여 결측치를 대치<br><br>
+－ RandomForest-Algorithm을 기반으로한 Missforest를 통해<br>
+다른 특성들과의 관계를 계산하여 결측치를 대치<br><br>
 ![](./images/ordinal_type_clear.jpg)<br>
 － 순서형 변수에 대한 결측치처리 완료<br>
 
 <br>
 
 #### **1.8 기계학습을 통한 결측값 처리(명목형)**
-채용·구직환경에서 일반적으로 순위를 측정할 수 없는 특성 중<br>결측치 처리가 되지 않은 행에 대하여 MissForest를 통한 기계학습 대치 진행<br>
+채용·구직환경에서 일반적으로 순위를 측정할 수 없는 특성 중<br>
+결측치 처리가 되지 않은 행에 대하여 MissForest를 통한 기계학습 대치 진행<br>
 > ![](./images/nominal_missforest.jpg)<br>
-－ RandomForest-Algorithm을 기반으로한 Missforest를 통해<br>다른 특성들과의 관계를 계산하여 결측치를 대치<br><br>
+－ RandomForest-Algorithm을 기반으로한 Missforest를 통해<br>
+다른 특성들과의 관계를 계산하여 결측치를 대치<br><br>
 ![](./images/nomiinal_type_clear.jpg)<br>
 － 명목형 변수에 대한 결측치처리 완료<br>
 
@@ -233,12 +241,15 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 － 같은 값을 표기(1:1 매칭)하는 특성 삭제_(city)<br>
 － 명목형 특성 OneHot-Encoding(gender, major_discipline, company_tyle)<br><br>
 **최종 17743 레코드 X 25개 속성 형태**<br>
-(범주형 → 성별 : 4종 / 전공 : 6종 / 회사유형 : 7종)<br>+ (수치형 / 순서형 → 이외 10개 특성)
+(범주형 → 성별 : 4종 / 전공 : 6종 / 회사유형 : 7종)<br>
++ (수치형 / 순서형 → 이외 10개 특성)
 
 <br>
 
 ### **2. 데이터 균형화**<br>
-기계학습 이전 학습,테스트데이터를 형성하고, <br>이직 희망자와 비희망자의 분포가 불균형한 데이터임을 확인하여<br>양질의 기계학습을 위한 증폭을 진행
+기계학습 이전 학습,테스트데이터를 형성하고, <br>
+이직 희망자와 비희망자의 분포가 불균형한 데이터임을 확인하여<br>
+양질의 기계학습을 위한 증폭을 진행
 
 <br>
 
@@ -253,7 +264,8 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 <br>
 
 #### **2.2 Oversampling 기법 적용**<br>
-불균형한 데이터를 해소하기 위해 4개의 증폭기법<br>(SMOTE, ADASYN, SMOTE-Tomek, SMOTE-ENN)적용<br><br>
+불균형한 데이터를 해소하기 위해 4개의 증폭기법<br>
+(SMOTE, ADASYN, SMOTE-Tomek, SMOTE-ENN)적용<br><br>
 > **1) Basic Data**<br>
 ![](./images/basic_data.jpg)<br>
 
@@ -268,30 +280,35 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 > **3) ADASYN Oversampling Data**<br>
 ![](./images/adasyn_data.jpg)<br>
-－ 데이터 증폭 적용 후 시각화 결과 균형이 맞춰졌으며,<br>알고리즘 특성상 이직희망자(1)의 샘플이 더 생성된 모습
+－ 데이터 증폭 적용 후 시각화 결과 균형이 맞춰졌으며,<br>
+알고리즘 특성상 이직희망자(1)의 샘플이 더 생성된 모습
 
 <br>
 
 > **4) SMOTE-Tomek Oversampling Data**<br>
 ![](./images/smote-tomek_data.jpg)<br>
-－ 데이터 증폭 적용 후 시각화 결과 균형이 맞춰졌으며,<br>복합 sampling 알고리즘 특성상 전체 데이터 갯수는 단순 증폭 알고리즘보다 감소한 모습 
+－ 데이터 증폭 적용 후 시각화 결과 균형이 맞춰졌으며,<br>
+복합 sampling 알고리즘 특성상 전체 데이터 갯수는 단순 증폭 알고리즘보다 감소한 모습 
 
 <br>
 
 > **5) SMOTE-ENN Oversampling Data**<br>
 ![](./images/smote-enn_data.jpg)<br>
-－ 데이터 증폭을 적용하였으나, 복합 sampling 알고리즘 특성상<br>데이터가 많았던 '이직비희망자'는 감소하고 '이직희망자'가 증가하여 형세가 뒤집힌 모습
+－ 데이터 증폭을 적용하였으나, 복합 sampling 알고리즘 특성상<br>
+데이터가 많았던 '이직비희망자'는 감소하고 '이직희망자'가 증가하여 형세가 뒤집힌 모습
 
 <br>
 
 > **6) Check All Data**<br>
 ![](./images/check_all_data.jpg)<br>
-－ 증폭 알고리즘 적용 전후 target의 갯수를 시각화한 결과<br>SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 해소 완료
+－ 증폭 알고리즘 적용 전후 target의 갯수를 시각화한 결과<br>
+SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 해소 완료
 
 <br>
 
 ### **3. 이진분류 모델 설계<br>**
-평가지표를 선정, 데이터 증폭 알고리즘별 분류모델 생성 후<br>최우수 모델에 대한 파라미터 튜닝 진행<br>
+평가지표를 선정, 데이터 증폭 알고리즘별 분류모델 생성 후<br>
+최우수 모델에 대한 파라미터 튜닝 진행<br>
 <br>
 
 #### **3.1 기준모델 정의**<br>
@@ -314,7 +331,8 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 － XGBoost : 지속 개선 후 결과도출<br><br>
 **2) 모델 생성시 제약조건**<br>
 ![](./images/model_constraint.jpg)<br>
-－ 과소, 과대적합 방지가 일어나지 않는 선에서 파라미터를 지정하여<br>동등한 조건 내 성능을 비교하기 위해 제약조건 적용<br>
+－ 과소, 과대적합 방지가 일어나지 않는 선에서 파라미터를 지정하여<br>
+동등한 조건 내 성능을 비교하기 위해 제약조건 적용<br>
 
 <br>
 
@@ -334,14 +352,16 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 ![](./images/final_model.jpg)<br>
 ![](./images/final_auprc.jpg)<br>
 － 파라미터 조정 이후 Accuracy, AUPRC 증가<br><br>
-**“SMOTE Data로 학습이후 Parameter Tuning을 거친 Random Forest Model”을<br>“데이터 직군의 이직여부를 판단하는 최종모델＂로 선정**<br>
+**“SMOTE Data로 학습이후 Parameter Tuning을 거친 Random Forest Model”을<br>
+“데이터 직군의 이직여부를 판단하는 최종모델＂로 선정**<br>
 
 <br>
 
 ### **4. 모델 분석 결과<br>**
 > **1) 특성중요도 순위**<br><br>
 ![](./images/feature_importance.jpg)<br>
-－ 최종모델이 이직여부를 분류할때 참고한 주요 특성은<br>도시개발지수(CDI), 경력년수(experience), 회사규모_회사에 종사중인 사원수(company_size)이하 순<br><br>
+－ 최종모델이 이직여부를 분류할때 참고한 주요 특성은<br>
+도시개발지수(CDI), 경력년수(experience), 회사규모_회사에 종사중인 사원수(company_size)이하 순<br><br>
 － 최초 가설로 설정한 도시개발지수와 경력년수가 상위권에 위치함을 인지
 
 <br>
@@ -356,8 +376,10 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 > **3) 이직희망여부에 대한 경험년차의 영향**<br>
 ![](./images/about_experience_feature.jpg)<br><br>
-－ 직종경험년차가 2년차까지 이직 희망률이 증가추세이며,<br>3년차 까지는 양수의 영역으로 비교적 높음을 관측 <br><br>
-－ 연차가 5년 이상일때 음수의 영역에서 기울기의 큰 변화가 없으므로<br>이직자와 이직비희망자의 비율이 지속적으로 유사<br><br>
+－ 직종경험년차가 2년차까지 이직 희망률이 증가추세이며,<br>
+3년차 까지는 양수의 영역으로 비교적 높음을 관측 <br><br>
+－ 연차가 5년 이상일때 음수의 영역에서 기울기의 큰 변화가 없으므로<br>
+이직자와 이직비희망자의 비율이 지속적으로 유사<br><br>
 － 이를통해 1-3년차의 주니어 분석가들의 이직률이 높고, 이후 안정추세를 찾아가는것으로 추측이 가능<br>
 
 <br>
