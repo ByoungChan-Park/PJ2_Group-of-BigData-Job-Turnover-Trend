@@ -19,7 +19,7 @@ https://github.com/ByoungChan-Park/PJ2_Group-of-BigData-Job-Turnover-Trend/tree/
 https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scientists<br>
 현·예비 데이터 직군 종사자들의 배경환경과 이직희망 여부를 기록한 데이터셋
 <br><br>
-Data preview
+### Data preview
 1. Surveyor columns<br>
 ![](./images/surveyor_col.jpg)
    >   
@@ -106,11 +106,11 @@ Data preview
 
 ---
 
-### **1. 탐색적 데이터분석**
+## **1. 탐색적 데이터분석**
 
 <br>
 
-#### **1.1　데이터 현황 파악**
+### **1.1　데이터 현황 파악**
 > <br>![](./images/data_preview.jpg)<br>
 － 'city'는 도시의 고유명이기에 High cardinality 현상 관측<br>
 － 'enrollee_id'는 종사자의 고유명이기에 unique현상 관측
@@ -120,44 +120,45 @@ Data preview
 
 <br>
 
-#### **1.2　데이터 미리보기**<br>
+### **1.2　데이터 미리보기**<br>
 데이터를 구성하는 특성을 세부류로 나누어 동향 확인 및 특성별 결측치 확인
 
 <br>
 
-> **1) 인적자료(성별/학력)**<br>
+> ### **1) 인적자료(성별/학력)**<br>
 － 인적자료(성별/학력)에 속하는 특성과 이직희망여부의 관계성 추론<br><br>
 ![](./images/about_enrollee.jpg)<br>
 
 <br>
 
-> **2) 인적자료(경험)**<br>
+> ### **2) 인적자료(경험)**<br>
 － 인적자료(경험)에 속하는 특성과 이직희망여부의 관계성 추론<br><br>
 ![](./images/about_experience.jpg)<br>
 
 <br>
 
-> **3) 물적자료(인프라/회사)**<br>
+> ### **3) 물적자료(인프라/회사)**<br>
 － 물적자료(인프라/회사)에 속하는 특성과 이직희망여부의 관계성 추론<br><br>
 ![](./images/about_infra.jpg)<br>
 
 <br>
 
-> **4) 특성별 결측값 비율**<br>
+> ### 4) 특성별 결측값 비율<br>
 － 특성별 결측치 비율을 확인 및 대치계획 수립
 ![](./images/about_missing_val.jpg)<br>
-<br>1)  **결측값이 있는 수치형변수**<br>
+<br>
+1)  **결측값이 있는 수치형변수**<br>
 　- 없음<br>
 2) **결측값이 있는 Ordinal범주형변수(순위를 측정할 수 있는 변수)**<br>
 　- education_level,　experience,　last_new_job,　company_size<br>
-**3) 결측값이 있는 Nominal범주형변수(순위를 측정할 수 없는 변수)**<br>
+3) **결측값이 있는 Nominal범주형변수(순위를 측정할 수 없는 변수)**<br>
 　- gender,　major_discipline,　company_type<br><br>
 **Missing Value Handling Plan :**<br>
 변수(특성)의 성질에 따라 적합한 대치법 활용<br>(다른 특성으로 유추, 머신러닝모델 활용, 단일값대치)
 
 <br>
 
-#### **1.3　순서형변수 인코딩**<br>
+### **1.3　순서형변수 인코딩**<br>
 결측값 처리 이전 채용·구직환경시장에서 일반적으로 순위를 측정할 수 있는 특성들에 한해 Mapping을 통한 Encoding<br>
 >![](./images/data_encoding.jpg)<br><br>
 > **1) education_level**<br>
@@ -180,14 +181,14 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 <br>
 
-#### **1.4　이상치 처리**<br>
+### **1.4　이상치 처리**<br>
 결측치 대치 소요를 줄이기 위해 교육시간(training_hours)에 대한 이상치삭제
 >![](./images/out_lier_remove.jpg)
 <br>
 
 <br>
 
-#### **1.5 결측값 처리(다른 특성으로 유추)**<br>
+### **1.5 결측값 처리(다른 특성으로 유추)**<br>
 연관성이 있을것으로 예상되는 특성들을 묶어 유추하는 방법의 대치
 > **1) major_discipline & education_level**<br>
 － 학력(education_level)이 고등학교졸업(2) 미만일 경우 major_discipline(전공)이 없을 것이라 추측<br>
@@ -204,7 +205,7 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 <br>
 
-#### **1.6 결측값 처리(유추 불가 특성)**
+### **1.6 결측값 처리(유추 불가 특성)**
 성별(gender)의 경우 다른 특성으로 유추할 수 없다고 판단<br>
 >![](./images/no_gender.jpg)<br><br>
 － cardinality가 3개로, 다른 특성에 비해 다양하지 않기에,<br>
@@ -215,7 +216,7 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 <br>
 
-#### **1.7 기계학습을 통한 결측값 처리(순서형)**
+### **1.7 기계학습을 통한 결측값 처리(순서형)**
 채용·구직환경에서 일반적으로 순위를 측정할 수 있는 특성 중<br>
 결측치 처리가 되지 않은 행에 대하여 MissForest를 통한 기계학습 대치 진행<br>
 > ![](./images/ordinal_missforest.jpg)<br>
@@ -226,7 +227,7 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 <br>
 
-#### **1.8 기계학습을 통한 결측값 처리(명목형)**
+### **1.8 기계학습을 통한 결측값 처리(명목형)**
 채용·구직환경에서 일반적으로 순위를 측정할 수 없는 특성 중<br>
 결측치 처리가 되지 않은 행에 대하여 MissForest를 통한 기계학습 대치 진행<br>
 > ![](./images/nominal_missforest.jpg)<br>
@@ -237,7 +238,7 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 <br>
 
-#### **1.9 데이터 재구성**
+### **1.9 데이터 재구성**
 결측치 제거 완료 후 학습 / 검증 데이터로 변환 이전 데이터 재구성<br>
 > ![](./images/data_reshape.jpg)<br>
 － unique값 index로 전환_(enrollee_id)<br>
@@ -251,14 +252,14 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 ---
 
-### **2. 데이터 균형화**<br>
+## **2. 데이터 균형화**<br>
 기계학습 이전 학습,테스트데이터를 형성하고, <br>
 이직 희망자와 비희망자의 분포가 불균형한 데이터임을 확인하여<br>
 양질의 기계학습을 위한 증폭을 진행
 
 <br>
 
-#### **2.1 데이터 분할**
+### **2.1 데이터 분할**
 > 머신러닝 모델에 사용할 학습데이터와 테스트데이터를 80% : 20% 비율로 분할<br> 
 ![](./images/data_split.jpg)<br><br>
 분할된 데이터 양상 비교
@@ -268,7 +269,7 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 <br>
 
-#### **2.2 Oversampling 기법 적용**<br>
+### **2.2 Oversampling 기법 적용**<br>
 불균형한 데이터를 해소하기 위해 4개의 증폭기법<br>
 (SMOTE, ADASYN, SMOTE-Tomek, SMOTE-ENN)적용<br><br>
 > **1) Basic Data**<br>
@@ -313,12 +314,12 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 ---
 
-### **3. 이진분류 모델 설계<br>**
+## **3. 이진분류 모델 설계<br>**
 평가지표를 선정, 데이터 증폭 알고리즘별 분류모델 생성 후<br>
 최우수 모델에 대한 파라미터 튜닝 진행<br>
 <br>
 
-#### **3.1 기준모델 정의**<br>
+### **3.1 기준모델 정의**<br>
 ![](./images/test_set.jpg)
 > **1) Accracy BaseLine**<br>
 ![](./images/accuracy_baseline.jpg)<br>
@@ -330,7 +331,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 <br>
 
-#### **3.2 사용모델 설명**
+### **3.2 사용모델 설명**
 데이터별 생성할 RandomForest, XGBoost 모델에 대한 설명<br>
 > **1) 모델 설명**<br>
 ![](./images/about_model.jpg)<br>
@@ -343,7 +344,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 <br>
 
-#### **3.3 생성모델 성능비교**<br><br>
+### **3.3 생성모델 성능비교**<br><br>
 > **10개모델 성능 비교**<br>
 ![](./images/model_performance.jpg)<br>
 ![](./images/confusion_matrix.jpg)<br>
@@ -354,7 +355,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 <br>
 
-#### **3.4 최종모델 선정**<br><br>
+### **3.4 최종모델 선정**<br><br>
 > **Hyperparameter Tunning 이후 기존 모델과 성능비교**<br>
 ![](./images/final_model.jpg)<br>
 ![](./images/final_auprc.jpg)<br>
@@ -366,7 +367,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 ---
 
-### **4. 모델 분석 결과<br>**
+## **4. 모델 분석 결과<br>**
 > **1) 특성중요도 순위**<br><br>
 ![](./images/feature_importance.jpg)<br>
 － 최종모델이 이직여부를 분류할때 참고한 주요 특성은<br>
@@ -411,7 +412,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 ---
 
-### **5. 이전 프로젝트 대비 개선사항**<br>
+## **5. 이전 프로젝트 대비 개선사항**<br>
 > **1) 시각화의 품질향상**<br>
 > - bar chart에 국한되었던 Draft Version에 비해 다양한 chart 도식 및 인포그래픽 형식의 도표 삽입을 시행하여<br>
 > 전문적인 시각화자료를 확보할 수 있었다. 
