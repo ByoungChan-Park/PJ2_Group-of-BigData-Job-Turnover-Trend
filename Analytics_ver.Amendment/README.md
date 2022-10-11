@@ -4,6 +4,8 @@
 
 ### **개선 된 프로젝트**
 해당 프로젝트는 이전 프로젝트(ver.Draft)의 개선된 버전으로, 결측치처리, 불균형데이터처리, 평가지표 선정 등 다방면에서 업데이트를 진행<br>
+－ 이전 프로젝트 링크<br>
+https://github.com/ByoungChan-Park/PJ2_Group-of-BigData-Job-Turnover-Trend/tree/main/Analytics_ver.Draft<br>
 
 <br>
 
