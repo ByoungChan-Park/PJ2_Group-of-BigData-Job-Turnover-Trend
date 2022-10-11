@@ -161,19 +161,19 @@ https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scienti
 ### **1.3　순서형변수 인코딩**<br>
 결측값 처리 이전 채용·구직환경시장에서 일반적으로 순위를 측정할 수 있는 특성들에 한해 Mapping을 통한 Encoding<br>
 >![](./images/data_encoding.jpg)<br><br>
-> **1) education_level**<br>
+> ### **1) education_level**<br>
 ![](./images/edu_enc.jpg)<br>
 **(초등학교졸업 : 1점 / 고등학교졸업 : 2점 / 학사 : 3점 / 석사 : 4점 / 박사 : 5점)** <br><br>
-> **2) experience**<br>
+> ### **2) experience**<br>
 ![](./images/exp_enc.jpg)<br>
 **경험년차가 높을수록 높은점수 부여**<br><br>
-> **3) last_new_job**<br>
+> ### **3) last_new_job**<br>
 ![](./images/last_job_enc.jpg)<br>
 **이전직장에서 근속년수가 높을수록 높은점수 부여**<br><br>
-> **4) company_size**<br>
+> ### **4) company_size**<br>
 ![](./images/comsize_enc.jpg)<br>
 **회사규모(사원수)가 클수록 높은점수 부여**<br><br>
-> **5) relevent_experience**<br>
+> ### **5) relevent_experience**<br>
 ![](./images/relevent_exp_enc.jpg)<br>
 **(경험없음 : 0점 / 경험있음 : 1점)**<br>
 boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적용됨으로 경험 여부를 차등화
@@ -190,14 +190,14 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 
 ### **1.5 결측값 처리(다른 특성으로 유추)**<br>
 연관성이 있을것으로 예상되는 특성들을 묶어 유추하는 방법의 대치
-> **1) major_discipline & education_level**<br>
+> ### **1) major_discipline & education_level**<br>
 － 학력(education_level)이 고등학교졸업(2) 미만일 경우 major_discipline(전공)이 없을 것이라 추측<br>
 ![](./images/no_major.jpg)<br><br>
  － 실제로 전공특성의 모든 결측치(붉은색)가 고등학교 미만 학력에서 검출. 해당부문 결측치'No Major' 할당<br>
  － 학력과 전공이 모두 결측치(보라색)일 경우 유추가 불가능하기에 해당 열 삭제<br><br>
  ![](./images/major_before_after.jpg)
 <br><br>
->**2) company_size & company_type**<br>
+> ### **2) company_size & company_type**<br>
 － 회사규모(company_size), 회사유형(company_type) 모두 결측값(0, NaN)일 경우 미취업자로 판단하여 'No job' 할당<br>
 ![](./images/no_job.jpg)<br><br>
 － 한개 특성만 NaN일경우 추후 머신러닝모델(Missforest)을 활용하여 대치 (이후 기술)<br><br>
@@ -272,40 +272,40 @@ boolean으로 분류할 수 있으나, 경험보유는구직시 메리트로 적
 ### **2.2 Oversampling 기법 적용**<br>
 불균형한 데이터를 해소하기 위해 4개의 증폭기법<br>
 (SMOTE, ADASYN, SMOTE-Tomek, SMOTE-ENN)적용<br><br>
-> **1) Basic Data**<br>
+> ### **1) Basic Data**<br>
 ![](./images/basic_data.jpg)<br>
 
 
 <br>
 
-> **2) SMOTE Oversampling Data**<br>
+> ### **2) SMOTE Oversampling Data**<br>
 ![](./images/smote_data.jpg)<br>
 － 데이터 증폭 적용 후 시각화 결과 균형이 맞춰짐을 확인
 
 <br>
 
-> **3) ADASYN Oversampling Data**<br>
+> ### **3) ADASYN Oversampling Data**<br>
 ![](./images/adasyn_data.jpg)<br>
 － 데이터 증폭 적용 후 시각화 결과 균형이 맞춰졌으며,<br>
 알고리즘 특성상 이직희망자(1)의 샘플이 더 생성된 모습
 
 <br>
 
-> **4) SMOTE-Tomek Oversampling Data**<br>
+> ### **4) SMOTE-Tomek Oversampling Data**<br>
 ![](./images/smote-tomek_data.jpg)<br>
 － 데이터 증폭 적용 후 시각화 결과 균형이 맞춰졌으며,<br>
 복합 sampling 알고리즘 특성상 전체 데이터 갯수는 단순 증폭 알고리즘보다 감소한 모습 
 
 <br>
 
-> **5) SMOTE-ENN Oversampling Data**<br>
+> ### **5) SMOTE-ENN Oversampling Data**<br>
 ![](./images/smote-enn_data.jpg)<br>
 － 데이터 증폭을 적용하였으나, 복합 sampling 알고리즘 특성상<br>
 데이터가 많았던 '이직비희망자'는 감소하고 '이직희망자'가 증가하여 형세가 뒤집힌 모습
 
 <br>
 
-> **6) Check All Data**<br>
+> ### **6) Check All Data**<br>
 ![](./images/check_all_data.jpg)<br>
 － 증폭 알고리즘 적용 전후 target의 갯수를 시각화한 결과<br>
 SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 해소 완료
@@ -321,23 +321,23 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 ### **3.1 기준모델 정의**<br>
 ![](./images/test_set.jpg)
-> **1) Accracy BaseLine**<br>
+> ### **1) Accracy BaseLine**<br>
 ![](./images/accuracy_baseline.jpg)<br>
 
 <br>
 
-> **2) AUPRC**<br>
+> ### **2) AUPRC**<br>
 ![](./images/auprc_baseline.jpg)<br>
 
 <br>
 
 ### **3.2 사용모델 설명**
 데이터별 생성할 RandomForest, XGBoost 모델에 대한 설명<br>
-> **1) 모델 설명**<br>
+> ### **1) 모델 설명**<br>
 ![](./images/about_model.jpg)<br>
 － RandomeForest : 개인분석 후 취합하여 결과도출<br>
 － XGBoost : 지속 개선 후 결과도출<br><br>
-**2) 모델 생성시 제약조건**<br>
+### **2) 모델 생성시 제약조건**<br>
 ![](./images/model_constraint.jpg)<br>
 － 과소, 과대적합 방지가 일어나지 않는 선에서 파라미터를 지정하여<br>
 동등한 조건 내 성능을 비교하기 위해 제약조건 적용<br>
@@ -368,7 +368,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 ---
 
 ## **4. 모델 분석 결과<br>**
-> **1) 특성중요도 순위**<br><br>
+> ### **1) 특성중요도 순위**<br><br>
 ![](./images/feature_importance.jpg)<br>
 － 최종모델이 이직여부를 분류할때 참고한 주요 특성은<br>
 도시개발지수(CDI), 경력년수(experience), 회사규모_회사에 종사중인 사원수(company_size)이하 순<br><br>
@@ -376,7 +376,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 <br>
 
-> **2) 이직희망여부에 대한 도시개발지수의 영향**<br><br>
+> ### **2) 이직희망여부에 대한 도시개발지수의 영향**<br><br>
 ![](./images/about_CDI_feature.jpg)<br>
 － 도시 개발지수가 0.624미만인 곳에 종사하는 사람들의 이직희망율이 양수의 영역에서 도식<br><br>
 － 이후 지수가 커질수록 이직 희망률이 감소하는 추세<br><br>
@@ -384,7 +384,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 <br>
 
-> **3) 이직희망여부에 대한 경험년차의 영향**<br>
+> ### **3) 이직희망여부에 대한 경험년차의 영향**<br>
 ![](./images/about_experience_feature.jpg)<br><br>
 － 직종경험년차가 2년차까지 이직 희망률이 증가추세이며,<br>
 3년차 까지는 양수의 영역으로 비교적 높음을 관측 <br><br>
@@ -394,7 +394,7 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 <br>
 
-> **4) 이직트렌드 분석 결과**<br>
+> ### **4) 이직트렌드 분석 결과**<br>
 가설에 주제가 되고 특성중요도에서도 상위를 차지했던 도시개발지수와 경험년차를 이직희망여부와 동시 도식<br>
 ![](./images/turnover_trend.jpg)<br><br>
 － 지수가 비교적 낮은 위치에 있는 0.624를 기점으로 이직희망률이 높았으며,<br>
@@ -413,13 +413,13 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 ---
 
 ## **5. 이전 프로젝트 대비 개선사항**<br>
-> **1) 시각화의 품질향상**<br>
+> ### **1) 시각화의 품질향상**<br>
 > - bar chart에 국한되었던 Draft Version에 비해 다양한 chart 도식 및 인포그래픽 형식의 도표 삽입을 시행하여<br>
 > 전문적인 시각화자료를 확보할 수 있었다. 
 
 <br>
 
-> **2) 결측치처리 방법의 세분화**<br>
+> ### **2) 결측치처리 방법의 세분화**<br>
 > - 결측치를 처리한다는 명목 하 겉보기에만 다른값('No Data')으로 일괄대치했던 이전 프로젝트 대비,<br>
 > "다른특성으로 유추", "기계학습을 활용한 대치"<br>
 > 를 도입하여 보다 영양가 있는 데이터 확보가 가능했다.<br>
@@ -432,13 +432,13 @@ SMOTE-ENN을 제외한 모든 기법에서 표본증가 및 imbalanced 이슈 �
 
 <br>
 
->**3) 다양한 증폭 알고리즘 도입**<br>
+> ### **3) 다양한 증폭 알고리즘 도입**<br>
 > - 단순히 대중적이란 이유로 SMOTE 증폭 알고리즘 사용에 그쳤던 Draft Version과 달리,<br>
 > 보다 다양한 Over Sampling, Combining Sampling을 활용하며<br>
 > 개념학습 및 다양한 방법론의 존재를 인지할 수 있었다.
 
 <br>
 
->**4) 평가지표 재선정**<br>
+> ### **4) 평가지표 재선정**<br>
 > - 주제의 특징을 보다 잘 반영할 수 있는 평가지표(AUPRC)를 선정하는 과정 속,<br>
 > 상황에 따라 평가지표의 적합성이 달라짐을 체득할 수 있었다.
