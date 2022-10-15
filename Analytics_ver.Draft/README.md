@@ -110,7 +110,7 @@ Data preview
 ![](./images/drop_city_col.jpg)<br>
 **도시(city)는 코드형식으로 되어있으며, 도시개발지수(city_development_index)와 1:1 대응관계이기에 city행을 삭제<br><br><br>
 ![](./images/CDI_col.jpg)<br>
-도시개발지수(city_development_index)명을 CDI로 변경 및 이는 도시의 인프라를 나타내므로, 점수화가 가능할 것이란 판단 하 소숫점 둘째자리에서 반올림 후 0.1 단위로 등급 부여**<br>
+도시개발지수(city_development_index)명을 CDI로 변경 및 이는 도시의 인프라를 나타내므로,<br>점수화가 가능할 것이란 판단 하 소숫점 둘째자리에서 반올림 후 0.1 단위로 등급 부여**<br>
 
 <br>
 
@@ -179,7 +179,7 @@ ex) CDI<br><br>
 #### **2.1 데이터 분할**
 > 머신러닝 모델에 사용할 학습데이터와 테스트데이터를 80% : 20% 비율로 분할<br> 
 ![](./images/split_data.jpg)<br><br>
-분할된 데이터 불균형 관측
+**분할된 데이터 불균형 관측**<br>
 ![](./images/imbalanced_data.jpg)<br>
 **이직 비희망자(0)수와 이직 희망자(1) 수의 차이가 커 모델학습시 일반화가 어려울 수 있을 것으로 예상**
 <br>
@@ -206,32 +206,32 @@ target이 72:28 비율로 나타나는 기본 데이터셋은 모든 예측을 0
 
 > **2) ROC AUC Score**<br>
 ![](./images/ROC_AUC_Score.jpg)<br>
-퇴직자를 예측하는 문제가 주가 되므로, recall 점수가 예측에 사용될 수 있으나, 하나의 분석대상으로 수립한 예측모델을 다른 분석대상에 적용하면 정확도가 떨어질 수 있으므로, 두 분석 대상자(재직자, 퇴직자) 모두에 대해 좋은 예측력을 얻고자 ROC AUC Score를 평가지표로 도입<br>
+퇴직자를 예측하는 문제가 주가 되므로, recall 점수가 예측에 사용될 수 있으나,<br>하나의 분석대상으로 수립한 예측모델을 다른 분석대상에 적용하면 정확도가 떨어질 수 있으므로,<br>두 분석 대상자(재직자, 퇴직자) 모두에 대해 좋은 예측력을 얻고자<br>ROC AUC Score를 평가지표로 도입<br>
 **(예측모델이 recall과 specificity를 동시에 고려하여 정확히 분류 할 수 있도록 함)**<br><br>
 **기준선이 되는 값은 없으나, ROC AUC Score가 우수한 모델을 선정할 계획**
 
 <br>
 
 #### **3.2 생성모델 성능 비교**
-> － RandomForest모델과 XGBoost모델에 "Label Encoding을 적용하는데 그친 불균형 데이터", "SMOTE Oversampling까지 적용한 균형데이터"를 각각 입력하여 총 네개 모델생성<br><br>
+> － RandomForest모델과 XGBoost모델에<br>"Label Encoding을 적용하는데 그친 불균형 데이터",<br>"SMOTE Oversampling까지 적용한 균형데이터"<br>를 각각 입력하여 총 네개 모델생성<br><br>
 － 모델학습시 과소,과대적합을 방지하고자 적정 parameter를 설정 및 통일하여 학습 실시<br>
 (n_estimators = 100, max_depth = 5)<br>
 
 <br>
 
 > **1) 생성된 네개모델 성능 비교**<br><br>
-![](./images/model_performance.jpg)<br>-Label Encoding만 거친 불균형 데이터로 학습을 진행한 RandomForest를 제외한 세 모델은 Accuracy BaseLine(72%)을 충족<br><br>- SMOTE를 활용하여 데이터 불균형을 해소한 뒤 학습한 모델의 성능이 상대적으로 우수<br><br>-SMOTE를 적용했을 때 RadomForest와 XGBoost 비교 결과 Accracy와 ROC AUC Score가 모두 높은 XGBoost에 대해 HyperParameter Tuning 실시.<br>
+![](./images/model_performance.jpg)<br>-Label Encoding만 거친 불균형 데이터로 학습을 진행한 RandomForest를 제외한 세 모델은 Accuracy BaseLine(72%)을 충족<br><br>- SMOTE를 활용하여 데이터 불균형을 해소한 뒤 학습한 모델의 성능이 상대적으로 우수<br><br>-SMOTE를 적용했을 때 RadomForest와 XGBoost 비교 결과 Accracy와 ROC AUC Score가 모두 높은 XGBoost에 대해<br>HyperParameter Tuning 실시.<br>
 
 <br>
 
 > **2) 하이퍼파라미터 튜닝 · 임계값 조절**<br><br>
-![](./images/model_selection_df.jpg)<br>- **"HyperParameter Tuning을 진행한 XGBoost 모델"** 이 기존 **"SMOTE 데이터로 학습시킨 XGBoost"** 보다 Accracy, ROC AUC Score에서 향상<br><br>- 추가적으로 **"HyperParameter Tuning을 진행한 XGBoost 모델"** 의 **임계값(threshold)** 을 조절하였을때 Accracy는 감소하였으나 , ROC AUC Score가 향상<br><br>- 결과적으로 **"HyperParameter & Threshold Tuning XGBoost 모델"** 의 Accracy가 감소하였으나 여전히 Accracy BaseLine을 충족하고, 주제에 특화된 평가지표인 ROC AUC Score가 증가하였으므로, 해당 모델을 최종모델로 선정<br>
+![](./images/model_selection_df.jpg)<br>- **"HyperParameter Tuning을 진행한 XGBoost 모델"** 이 기존 **"SMOTE 데이터로 학습시킨 XGBoost"** 보다<br>Accracy, ROC AUC Score에서 향상<br><br>- 추가적으로 **"HyperParameter Tuning을 진행한 XGBoost 모델"** 의 **임계값(threshold)** 을 조절하였을때<br>Accracy는 감소하였으나 , ROC AUC Score가 향상<br><br>- 결과적으로 **"HyperParameter & Threshold Tuning XGBoost 모델"** 의 Accracy가 감소하였으나 여전히 Accracy BaseLine을 충족하고,<br>주제에 특화된 평가지표인 ROC AUC Score가 증가하였으므로,<br>해당 모델을 최종모델로 선정<br>
 
 <br>
 
 > **3) Confusion Matrix를 통해 상세값 확인**<br><br>
 ![](./images/confusion_matrix_base_line.jpg)<br>- 해당 도표를 기준으로 아래 분류결과를 확인시<br><br>
-![](./images/model_confusionmatrix.jpg)<br>- **Tuned Params+threshold XGBoost** 모델의 TP부분이 확연히 증가한것을 볼 수 있었고, 이로인해 recall(sensitivity)값이 증가하고 1종오류가 발생하지 않는 것이 관측되었다.<br><br>- 또한, specificity값을 이루는 TN이 증가하고 FN이 감소하여 최종적으로 해당값이 증가함을 알 수 있다.<br><br>- 이러한 연관관계들로 ROC AUC Score가 가장 높게나옴을 파악할 수 있다.
+![](./images/model_confusionmatrix.jpg)<br>- **Tuned Params+threshold XGBoost** 모델의 TP부분이 확연히 증가한것을 볼 수 있었고,<br>이로인해 recall(sensitivity)값이 증가하고 1종오류가 발생하지 않는 것이 관측되었다.<br><br>- 또한, specificity값을 이루는 TN이 증가하고 FN이 감소하여 최종적으로 해당값이 증가함을 알 수 있다.<br><br>- 이러한 연관관계들로 ROC AUC Score가 가장 높게나옴을 파악할 수 있다.
 
 
 <br>
@@ -239,7 +239,7 @@ target이 72:28 비율로 나타나는 기본 데이터셋은 모든 예측을 0
 ### **4. 모델 분석 결과<br>**
 > **1) 특성중요도 순위**<br>
 ![](./images/feature_importance.jpg)<br>
-－ 최종모델이 이직여부를 분류할때 참고한 주요 특성은 도시개발지수(CDI), 회사규모_회사에 종사중인 사원수(company_size), 경력년수(experience) 이하 순<br><br>
+－ 최종모델이 이직여부를 분류할때 참고한 주요 특성은<br>도시개발지수(CDI), 회사규모_회사에 종사중인 사원수(company_size), 경력년수(experience) 이하 순<br><br>
 － 최초 가설로 설정한 도시개발지수와 경력년수가 상위권에 위치함을 인지
 <br>
 
@@ -247,7 +247,7 @@ target이 72:28 비율로 나타나는 기본 데이터셋은 모든 예측을 0
 ![](./images/about_CDI_feature.jpg)<br>
 － 도시 개발지수가 0.6-0.7(CDI 2 이하)미만인 곳에 종사하는 사람들의 이직희망율이 양수의 영역에서 도식<br><br>
 － 반대로 0.7-0.8 이상(CDI 2 이상)의 개발지수를 보이는 도시에서 종사하는 사람들은 이직 희망율이 음수영역 진입 후 지속 감소<br><br>
-－ 또한, 도시개발지수가 0.6미만(CDI 1)인 도시보다 0.6이상 0.7이하(CDI 2)인 도시에서 이직 희망율이 더 높은것을 보면, 0.7이상(CDI 2번 이상)의 도시에서부터 인프라가 크게 차이날것이라고 추측이 가능<br><br>
+－ 또한, 도시개발지수가 0.6미만(CDI 1)인 도시보다 0.6이상 0.7이하(CDI 2)인 도시에서 이직 희망율이 더 높은것을 보면,<br>0.7이상(CDI 2번 이상)의 도시에서부터 인프라가 크게 차이날것이라고 추측이 가능<br><br>
 **도시개발지수가 낮을수록 이직률이 높다 : 참인 가설**
 
 <br>
